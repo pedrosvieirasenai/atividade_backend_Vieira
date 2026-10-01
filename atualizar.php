@@ -1,24 +1,25 @@
 <?php
     include "config/conexao.php";
 
-    $id = intval($_POST ["id"]);
-    $cliente = ($_POST["cliente"]);
-    $equipamento = $_POST["eqipamento"];
-    $problema = "$_POST["problema"]);
+    $id = intval($_POST["id"]);
+    $cliente = $_POST["cliente"];
+    $equipamento = $_POST["equipamento"];
+    $problema = $_POST["problema"];
     $data_entrada = $_POST["data_entrada"];
     $status = $_POST["status"];
 
     $sql = "UPDATE ordens_servico
-        set cliente = ?,
-            equipamento = ?,
-            problema = ?,
-            data_entrada = ?,
-            status = ?
-        where id = ?",
+            SET cliente = ?,
+                equipamento = ?,
+                problema = ?,
+                data_entrada = ?,
+                status = ?
+            WHERE id = ?";
 
     $stmt = $conexao -> prepare($sql);
+
     $stmt -> bind_param(
-        "ssssssi",
+        "sssssi",
         $cliente,
         $equipamento,
         $problema,
@@ -28,12 +29,9 @@
     );
 
     if ($stmt->execute()){
-        header("location: index.php");
-        exist;
-        
-    
-    } else{
-        echo "erro ao atualizar";
-    }
-    
+        header("Location: index.php");
+        exit;
+    } else {
+        echo "Erro ao atualizar.";
+    }    
 ?>
